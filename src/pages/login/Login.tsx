@@ -23,7 +23,7 @@ export default function LoginPage() {
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [timer, setTimer] = useState(0);
-  const { setToken } = useAuthStore();
+  const { setAuthData } = useAuthStore();
   const navigate = useNavigate();
 
   // Mutation for sending OTP
@@ -31,7 +31,7 @@ export default function LoginPage() {
     mutationFn: sendOtp,
     onSuccess: () => {
       setOtpSent(true);
-      setTimer(60);
+      setTimer(120);
       const interval = setInterval(() => {
         setTimer((prev) => {
           if (prev <= 1) {
@@ -47,7 +47,13 @@ export default function LoginPage() {
   const verifyOtpMutation = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (data) => {
-      setToken(data.data.token, mobileNumber);
+      setAuthData({
+        token: data.data.token,
+        user_id: data.data.user_id,
+        user_name: data.data.user_name,
+        mobile: mobileNumber, 
+        roles: data.data.roles,
+      });
       navigate("/dashboard/search-document");
     },
   });

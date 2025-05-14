@@ -17,6 +17,7 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ITag } from "../../pages/dashboard/Dashboard.interface";
 import { notifications } from "@mantine/notifications";
+import { formatDate } from "../../utils/main";
 
 export const UploadDocument = () => {
   const [majorHead, setMajorHead] = useState<string | null>("");
@@ -26,7 +27,7 @@ export const UploadDocument = () => {
   const [remarks, setRemarks] = useState("");
   const [documentDate, setDocumentDate] = useState<Date | null>(null);
   // for testing
-  const [userId, setUserId] = useState("avinash");
+  const [userId, setUserId] = useState("test_avinash");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   useEffect(() => {
@@ -89,21 +90,20 @@ export const UploadDocument = () => {
       });
     }
 
-    const formData = new FormData();
+    const formattedDate = formatDate(documentDate);
+
     const payload = {
       major_head: majorHead,
       minor_head: minorHead,
-      document_date: documentDate
-        .toLocaleDateString("en-GB")
-        .replace(/\//g, "-"),
+      document_date: formattedDate,
       document_remarks: remarks,
       tags: selectedTags.map((tag) => ({ tag_name: tag })),
       user_id: userId,
     };
 
+    const formData = new FormData();
     formData.append("file", file);
-    // Ensure the JSON string is properly formatted without extra spaces
-    formData.append("data", JSON.stringify(payload).replace(/" :/g, '":'));
+    formData.append("data", JSON.stringify(payload));
 
     fileSubmitHandler.mutate(formData);
   };
