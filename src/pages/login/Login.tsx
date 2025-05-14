@@ -10,6 +10,7 @@ import {
   PinInput,
   Loader,
   Alert,
+  Flex,
 } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
@@ -46,8 +47,9 @@ export default function LoginPage() {
   const verifyOtpMutation = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (data) => {
-      setToken(data.token, mobileNumber);
-      navigate("/dashboard");
+      console.log(data);
+      setToken(data.data.token, mobileNumber);
+      navigate("/dashboard/search-document");
     },
   });
 
@@ -66,7 +68,7 @@ export default function LoginPage() {
   };
 
   return (
-    <Container size="xs" mt={100}>
+    <Container size="xs" mt={180}>
       <Title ta="center" mb={30}>
         Document Management System
       </Title>
@@ -110,17 +112,26 @@ export default function LoginPage() {
           </>
         ) : (
           <>
-            <Text mb="xs">We've sent an OTP to {mobileNumber}</Text>
-
-            <Group mb="md">
-              <PinInput
-                length={6}
-                value={otp}
-                onChange={setOtp}
-                type="number"
-                size="md"
-              />
-            </Group>
+            <Text mb="xs" ta="center" c="gray">
+              We've sent an OTP to {mobileNumber}
+            </Text>
+            <Flex
+              gap="md"
+              justify="center"
+              align="flex-start"
+              direction="row"
+              wrap="wrap"
+            >
+              <Group mb="md">
+                <PinInput
+                  length={6}
+                  value={otp}
+                  onChange={setOtp}
+                  type="number"
+                  size="lg"
+                />
+              </Group>
+            </Flex>
 
             {timer > 0 ? (
               <Text size="sm" c="dimmed" ta="center" mb="md">

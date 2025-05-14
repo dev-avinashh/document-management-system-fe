@@ -1,23 +1,26 @@
 import axios from "axios";
 import {
-  SendOtpRequest,
-  VerifyOtpRequest,
-  VerifyOtpResponse,
+  ISendOtpRequest,
+  IVerifyOtpRequest,
+  ILoginResponse,
 } from "./Login.interface";
 
-const API_URL = import.meta.env.VITE_API_URL 
+const API_URL = import.meta.env.VITE_API_URL;
+
+const headers = {
+  "Content-Type": "application/json",
+  "Accept-Encoding": "gzip",
+};
 
 export const sendOtp = async (mobileNo: string) => {
-  const res = await axios.post<SendOtpRequest>(
+  console.log("send otp called");
+  const res = await axios.post<ISendOtpRequest>(
     `${API_URL}/generateOTP`,
     {
       mobile_number: mobileNo,
     },
     {
-      headers: {
-        "Content-Type": "application/json",
-        "Accept-Encoding": "gzip"
-      },
+      headers,
     }
   );
   return res.data;
@@ -25,17 +28,15 @@ export const sendOtp = async (mobileNo: string) => {
 export const verifyOtp = async ({
   mobileNumber,
   otp,
-}: VerifyOtpRequest): Promise<VerifyOtpResponse> => {
-  const res = await axios.post<VerifyOtpResponse>(
+}: IVerifyOtpRequest): Promise<ILoginResponse> => {
+  const res = await axios.post<ILoginResponse>(
     `${API_URL}/validateOTP`,
     {
       mobile_number: mobileNumber,
       otp,
     },
     {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
     }
   );
   return res.data;
