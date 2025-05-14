@@ -8,14 +8,16 @@ interface AuthState {
   isAuthenticated: boolean;
   setToken: (token: string, mobileNumber: string) => void;
   logout: () => void;
+  getToken: () => string | null;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set,get) => ({
       token: null,
       mobileNumber: null,
       isAuthenticated: false,
+      getToken: () => get().token,
       setToken: (token, mobileNumber) => 
         set({ token, mobileNumber, isAuthenticated: true }),
       logout: () => 

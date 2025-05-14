@@ -47,7 +47,6 @@ export default function LoginPage() {
   const verifyOtpMutation = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (data) => {
-      console.log(data);
       setToken(data.data.token, mobileNumber);
       navigate("/dashboard/search-document");
     },
