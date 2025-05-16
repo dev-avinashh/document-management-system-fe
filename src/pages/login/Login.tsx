@@ -10,6 +10,7 @@ import {
   PinInput,
   Loader,
   Alert,
+  Flex,
 } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
@@ -22,7 +23,7 @@ export default function LoginPage() {
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [timer, setTimer] = useState(0);
-  const { setToken } = useAuthStore();
+  const { setAuthData } = useAuthStore();
   const navigate = useNavigate();
 
   // Mutation for sending OTP
@@ -30,7 +31,7 @@ export default function LoginPage() {
     mutationFn: sendOtp,
     onSuccess: () => {
       setOtpSent(true);
-      setTimer(60);
+      setTimer(120);
       const interval = setInterval(() => {
         setTimer((prev) => {
           if (prev <= 1) {
@@ -46,8 +47,14 @@ export default function LoginPage() {
   const verifyOtpMutation = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (data) => {
-      setToken(data.token, mobileNumber);
-      navigate("/dashboard");
+      setAuthData({
+        token: data.data.token,
+        user_id: data.data.user_id,
+        user_name: data.data.user_name,
+        mobile: mobileNumber, 
+        roles: data.data.roles,
+      });
+      navigate("/dashboard/search-document");
     },
   });
 
@@ -66,7 +73,7 @@ export default function LoginPage() {
   };
 
   return (
-    <Container size="xs" mt={100}>
+    <Container size="xs" mt={180}>
       <Title ta="center" mb={30}>
         Document Management System
       </Title>
@@ -110,17 +117,26 @@ export default function LoginPage() {
           </>
         ) : (
           <>
-            <Text mb="xs">We've sent an OTP to {mobileNumber}</Text>
-
-            <Group mb="md">
-              <PinInput
-                length={6}
-                value={otp}
-                onChange={setOtp}
-                type="number"
-                size="md"
-              />
-            </Group>
+            <Text mb="xs" ta="center" c="gray">
+              We've sent an OTP to {mobileNumber}
+            </Text>
+            <Flex
+              gap="md"
+              justify="center"
+              align="flex-start"
+              direction="row"
+              wrap="wrap"
+            >
+              <Group mb="md">
+                <PinInput
+                  length={6}
+                  value={otp}
+                  onChange={setOtp}
+                  type="number"
+                  size="lg"
+                />
+              </Group>
+            </Flex>
 
             {timer > 0 ? (
               <Text size="sm" c="dimmed" ta="center" mb="md">

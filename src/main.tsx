@@ -7,6 +7,7 @@ import LoginPage from "./pages/login/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
 import { SearchDocument } from "./components/dashboard/SearchDocument";
 import { UploadDocument } from "./components/dashboard/UploadDocument";
+import { PrivateRoutes } from "./components/privateRoutes/PrivateRoutes";
 
 export const routes = [
   {
@@ -21,7 +22,11 @@ export const routes = [
   },
   {
     path: "/dashboard/",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoutes>
+        <Dashboard />
+      </PrivateRoutes>
+    ),
     children: [
       {
         index: true,
