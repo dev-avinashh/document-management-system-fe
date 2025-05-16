@@ -1,7 +1,7 @@
-import { SearchDocumentCard } from "../cards/SearchDocumentCard";
+import { SearchDocumentCard } from "../../components/cards/SearchDocumentCard";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { getDocuments } from "../../pages/dashboard/Dashboard.service";
+import { getDocuments } from "../../layout/dashboard/Dashboard.service";
 import { useAuthStore } from "../../store/auth.store";
 
 export const SearchDocument = () => {
@@ -49,9 +49,7 @@ export const SearchDocument = () => {
     <>
       <SearchDocumentCard onSearch={onSearch} />
       {error && <p style={{ color: "red" }}>Something went wrong</p>}
-      {documents && documents.length === 0 && (
-        <p>No documents found</p>
-      )}
+     
       {documents && documents.length > 0 && (
         <ul>
           {documents.map((doc: any, index: number) => (
