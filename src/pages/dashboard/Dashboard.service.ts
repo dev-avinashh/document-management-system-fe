@@ -8,6 +8,8 @@ export const getTags = async () => {
     return response.data.data;
   } catch (error) {
     console.error(error, "Error fetching tags");
+    throw error; 
+
   }
 };
 
@@ -24,5 +26,19 @@ export const uploadDocument = (data: FormData) => {
     return res;
   } catch (error) {
     console.error(error, "Error uploading document");
+    throw error; 
+
+  }
+};
+
+export const getDocuments = async (filters: any) => {
+  try {
+    const response = await axiosInstance.post("/searchDocumentEntry", {
+      ...filters,
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching documents:", error);
+    throw error; 
   }
 };
