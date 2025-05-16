@@ -27,7 +27,6 @@ export const UploadDocument = () => {
   const [remarks, setRemarks] = useState("");
   const [documentDate, setDocumentDate] = useState<Date | null>(null);
   // for testing
-  const [userId, setUserId] = useState("test_avinash");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   useEffect(() => {
@@ -92,14 +91,20 @@ export const UploadDocument = () => {
 
     const formattedDate = formatDate(documentDate);
 
-    const payload = {
+    const payload:any = {
       major_head: majorHead,
       minor_head: minorHead,
       document_date: formattedDate,
       document_remarks: remarks,
-      tags: selectedTags.map((tag) => ({ tag_name: tag })),
-      user_id: userId,
+      // tags: selectedTags.map((tag) => ({ tag_name: tag })),
+      user_id: 'test_avinash',
     };
+
+    if (selectedTags && selectedTags.length > 0) {
+      payload.tags = selectedTags.map((tag: string) => ({
+        tag_name: tag,
+      }));
+    }
 
     const formData = new FormData();
     formData.append("file", file);

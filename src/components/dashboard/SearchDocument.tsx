@@ -18,18 +18,27 @@ export const SearchDocument = () => {
   });
 
   const onSearch = (filters: any) => {
-    const payload = {
+    const payload: any = {
       major_head: filters.major_head || "",
       minor_head: filters.minor_head || "",
-      from_date: filters.from_date, 
+      from_date: filters.from_date,
       to_date: filters.to_date,
-      tags: filters.tags,
-      uploaded_by: "test_avinash", 
+      uploaded_by: "Avinash", // testing purpose
       start: 0,
       length: 10,
-      filterId: filters.filterId,
-      search: filters.search || "",
     };
+
+    // include tags if not empty
+    if (filters.tags && filters.tags.length > 0) {
+      payload.tags = filters.tags.map((tag: string) => ({
+        tag_name: tag,
+      }));
+    }
+
+    // include filterId if it exists
+    if (filters.filterId) {
+      payload.filterId = filters.filterId;
+    }
 
     searchDocuments(payload);
   };
@@ -38,6 +47,9 @@ export const SearchDocument = () => {
     <>
       <SearchDocumentCard onSearch={onSearch} />
       {error && <p style={{ color: "red" }}>Something went wrong</p>}
+      {documents && documents.length === 0 && (
+        <p>No documents found</p>
+      )}
       {documents && documents.length > 0 && (
         <ul>
           {documents.map((doc: any, index: number) => (
