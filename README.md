@@ -1,54 +1,95 @@
-# React + TypeScript + Vite
+# 📁 Document Management System (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A document management system built with **React**, **Mantine UI**, and **React Query**. It includes OTP-based login, persistent authentication, and features to upload and download documents.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Getting Started
 
-## Expanding the ESLint configuration
+### 1. Clone the repository
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+git clone git@github.com:dev-avinashh/document-management-system-fe.git
+cd document-management-system-fe
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Make sure you have **Node.js** and **npm** (or **yarn**) installed.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
 ```
+
+or
+
+```bash
+yarn install
+```
+
+### 3. Set up environment variables
+
+Create a `.env` file in the root of the project and add the following:
+
+```env
+VITE_API_URL = https://apis.allsoft.co/api/documentManagement
+```
+
+> ⚠️ Replace the URL above with your actual backend API URL if different.
+
+### 4. Start the development server
+
+```bash
+npm run dev
+```
+
+or
+
+```bash
+yarn dev
+```
+
+The app will be running at [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 🔐 Features
+
+### ✅ OTP-based Login
+- Login using phone or email
+- OTP verification flow without passwords
+
+### 🔁 Persistent Authentication
+- Auth state is saved using local storage
+- Auto-login for returning users
+
+---
+
+## 📄 Application Sections
+
+### 📤 Upload Document
+- Upload PDFs, images, or other supported file types
+- Show progress and metadata input
+- Supports error handling and file validations
+
+### 📥 Download Document
+- List of uploaded documents
+- Download files securely
+- Filter and search functionality
+
+---
+
+## 🛠️ Tech Stack
+
+| Tech         | Purpose                          |
+|--------------|----------------------------------|
+| React        | Frontend framework               |
+| Mantine UI   | Modern UI components             |
+| React Query  | Data fetching and caching        |
+| React Router | Routing                          |
+| Axios        | API communication                |
+| Vite         | Fast development/build tooling   |
+
+
+
+---

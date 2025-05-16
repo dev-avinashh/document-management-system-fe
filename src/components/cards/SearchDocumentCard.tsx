@@ -50,7 +50,6 @@ export const SearchDocumentCard = ({
       from_date: fromDate ? formatDate(fromDate) : "",
       to_date: toDate ? formatDate(toDate) : "",
       tags: selectedTags.map((tag) => ({ tag_name: tag })),
-      uploaded_by: "Avinash", // for testing purpose
       start: 0,
       length: 10,
       filterId: "1",

@@ -18,8 +18,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { ITag } from "../../pages/dashboard/Dashboard.interface";
 import { notifications } from "@mantine/notifications";
 import { formatDate } from "../../utils/main";
+import { useAuthStore } from "../../store/auth.store";
 
 export const UploadDocument = () => {
+  const userId = useAuthStore((state) => state.userId);
+
   const [majorHead, setMajorHead] = useState<string | null>("");
   const [minorHead, setMinorHead] = useState<string | null>("");
   const [minorHeadOptions, setMinorHeadOptions] = useState<string[]>([]);
@@ -97,7 +100,7 @@ export const UploadDocument = () => {
       document_date: formattedDate,
       document_remarks: remarks,
       // tags: selectedTags.map((tag) => ({ tag_name: tag })),
-      user_id: 'test_avinash',
+      user_id: userId,
     };
 
     if (selectedTags && selectedTags.length > 0) {
