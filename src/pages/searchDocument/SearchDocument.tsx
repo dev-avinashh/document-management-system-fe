@@ -49,7 +49,7 @@ export const SearchDocument = () => {
     <>
       <SearchDocumentCard onSearch={onSearch} />
       {error && <p style={{ color: "red" }}>Something went wrong</p>}
-     
+     {documents && documents.length===0 && <p>No documents found</p>}
       {documents && documents.length > 0 && (
         <ul>
           {documents.map((doc: any, index: number) => (

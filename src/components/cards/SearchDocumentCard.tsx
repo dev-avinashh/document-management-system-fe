@@ -12,8 +12,8 @@ export const SearchDocumentCard = ({
 }: {
   onSearch: (filters: any) => void;
 }) => {
-    const isLargeScreen = useMediaQuery("(min-width: 750px)");
-  
+  const isLargeScreen = useMediaQuery("(min-width: 750px)");
+
   const [majorHead, setMajorHead] = useState<string | null>("");
   const [minorHead, setMinorHead] = useState<string | null>("");
   const [minorOptions, setMinorOptions] = useState<string[]>([]);
@@ -46,7 +46,8 @@ export const SearchDocumentCard = ({
     value: tag.id,
   }));
 
-  const handleSearch = () => {
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
     const filters = {
       major_head: majorHead || "",
       minor_head: minorHead || "",
@@ -73,6 +74,7 @@ export const SearchDocumentCard = ({
         margin: isLargeScreen ? "" : "0 auto",
       }}
     >
+      <form onSubmit={handleSearch}>
       <Stack>
         <Select
           label="Major Head"
@@ -126,8 +128,13 @@ export const SearchDocumentCard = ({
           />
         </Group>
 
-        <Button onClick={handleSearch}>Search</Button>
+        <Group position="right" mt="md">
+          <Button type="submit" >
+            Search Document
+          </Button>
+        </Group>
       </Stack>
+      </form>
     </Card>
   );
 };

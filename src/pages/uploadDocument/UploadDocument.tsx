@@ -85,7 +85,8 @@ export const UploadDocument = () => {
     },
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!file || !majorHead || !minorHead || !documentDate) {
       return notifications.show({
         title: "Missing fields",
@@ -129,6 +130,7 @@ export const UploadDocument = () => {
       }}
     >
       <Stack>
+        <form onSubmit={handleSubmit}>
         <DateInput
           label="Document Date"
           placeholder="Pick date"
@@ -190,10 +192,10 @@ export const UploadDocument = () => {
           onChange={setFile}
           required
         />
-
-        <Group>
-          <Button onClick={handleSubmit}>Upload</Button>
+        <Group position="right" mt="md">
+          <Button >Upload</Button>
         </Group>
+        </form>
       </Stack>
     </Card>
   );
