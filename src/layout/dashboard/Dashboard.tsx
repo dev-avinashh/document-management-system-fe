@@ -15,7 +15,7 @@ import {
   Burger,
   useMantineTheme,
 } from "@mantine/core";
-import { IconRocket, IconPackage, IconLogout } from "@tabler/icons-react";
+import { IconRocket, IconPackage, IconLogout, IconUserPlus } from "@tabler/icons-react";
 import { useAuthStore } from "../../store/auth.store";
 
 interface INavItem {
@@ -34,6 +34,11 @@ const navItems: INavItem[] = [
     label: "Search Document",
     icon: <IconPackage size={16} />,
     path: "/dashboard/search-document",
+  },
+  {
+    label: "Search Document",
+    icon: <IconUserPlus size={16} />,
+    path: "/dashboard/create-user",
   },
 ];
 
