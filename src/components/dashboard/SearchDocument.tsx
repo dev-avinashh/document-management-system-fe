@@ -2,8 +2,10 @@ import { SearchDocumentCard } from "../cards/SearchDocumentCard";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { getDocuments } from "../../pages/dashboard/Dashboard.service";
+import { useAuthStore } from "../../store/auth.store";
 
 export const SearchDocument = () => {
+  const user_name = useAuthStore((state) => state.userName);
   const [documents, setDocuments] = useState([]);
 
   const { mutate: searchDocuments, error } = useMutation({
@@ -23,7 +25,7 @@ export const SearchDocument = () => {
       minor_head: filters.minor_head || "",
       from_date: filters.from_date,
       to_date: filters.to_date,
-      uploaded_by: "Avinash", // testing purpose
+      uploaded_by: user_name,
       start: 0,
       length: 10,
     };
