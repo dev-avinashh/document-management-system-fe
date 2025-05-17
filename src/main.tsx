@@ -4,10 +4,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import LoginPage from "./pages/login/Login";
-import Dashboard from "./pages/dashboard/Dashboard";
-import { SearchDocument } from "./components/dashboard/SearchDocument";
-import { UploadDocument } from "./components/dashboard/UploadDocument";
+import Dashboard from "./layout/dashboard/Dashboard";
+import { SearchDocument } from "./pages/searchDocument/SearchDocument";
+import { UploadDocument } from "./pages/uploadDocument/UploadDocument";
 import { PrivateRoutes } from "./components/privateRoutes/PrivateRoutes";
+import { UserCreation } from "./pages/userCreation/UserCreation";
 
 export const routes = [
   {
@@ -36,6 +37,10 @@ export const routes = [
       {
         path: "upload-document",
         element: <UploadDocument />,
+      },
+      {
+        path: "create-user",
+        element: <UserCreation />,
       },
     ],
   },

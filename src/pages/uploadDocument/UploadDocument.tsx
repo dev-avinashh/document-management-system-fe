@@ -13,15 +13,17 @@ import { useEffect, useState } from "react";
 import {
   getTags,
   uploadDocument,
-} from "../../pages/dashboard/Dashboard.service";
+} from "../../layout/dashboard/Dashboard.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ITag } from "../../pages/dashboard/Dashboard.interface";
+import { ITag } from "../../layout/dashboard/Dashboard.interface";
 import { notifications } from "@mantine/notifications";
 import { formatDate } from "../../utils/main";
 import { useAuthStore } from "../../store/auth.store";
+import { useMediaQuery } from "@mantine/hooks";
 
 export const UploadDocument = () => {
   const userId = useAuthStore((state) => state.userId);
+  const isLargeScreen = useMediaQuery("(min-width: 750px)");
 
   const [majorHead, setMajorHead] = useState<string | null>("");
   const [minorHead, setMinorHead] = useState<string | null>("");
@@ -83,7 +85,8 @@ export const UploadDocument = () => {
     },
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!file || !majorHead || !minorHead || !documentDate) {
       return notifications.show({
         title: "Missing fields",
@@ -94,7 +97,7 @@ export const UploadDocument = () => {
 
     const formattedDate = formatDate(documentDate);
 
-    const payload:any = {
+    const payload: any = {
       major_head: majorHead,
       minor_head: minorHead,
       document_date: formattedDate,
@@ -117,8 +120,17 @@ export const UploadDocument = () => {
   };
 
   return (
-    <Card shadow="sm" padding="lg" withBorder>
+    <Card
+      shadow="sm"
+      padding="lg"
+      withBorder
+      style={{
+        width: isLargeScreen ? "70%" : "90%",
+        margin: isLargeScreen ? '' : "0 auto", 
+      }}
+    >
       <Stack>
+        <form onSubmit={handleSubmit}>
         <DateInput
           label="Document Date"
           placeholder="Pick date"
@@ -180,10 +192,10 @@ export const UploadDocument = () => {
           onChange={setFile}
           required
         />
-
-        <Group>
-          <Button onClick={handleSubmit}>Upload</Button>
+        <Group position="right" mt="md">
+          <Button >Upload</Button>
         </Group>
+        </form>
       </Stack>
     </Card>
   );

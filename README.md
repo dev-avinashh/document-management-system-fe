@@ -49,7 +49,7 @@ or
 yarn dev
 ```
 
-The app will be running at [http://localhost:5173](http://localhost:5173)
+The app will be running at [https://localhost:5175](https://localhost:5175)
 
 ---
 

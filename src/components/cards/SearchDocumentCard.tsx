@@ -2,15 +2,18 @@ import { Card, Select, MultiSelect, Group, Button, Stack } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import { ITag } from "../../pages/dashboard/Dashboard.interface";
-import { getTags } from "../../pages/dashboard/Dashboard.service";
+import { ITag } from "../../layout/dashboard/Dashboard.interface";
+import { getTags } from "../../layout/dashboard/Dashboard.service";
 import { formatDate } from "../../utils/main";
+import { useMediaQuery } from "@mantine/hooks";
 
 export const SearchDocumentCard = ({
   onSearch,
 }: {
   onSearch: (filters: any) => void;
 }) => {
+  const isLargeScreen = useMediaQuery("(min-width: 750px)");
+
   const [majorHead, setMajorHead] = useState<string | null>("");
   const [minorHead, setMinorHead] = useState<string | null>("");
   const [minorOptions, setMinorOptions] = useState<string[]>([]);
@@ -43,7 +46,8 @@ export const SearchDocumentCard = ({
     value: tag.id,
   }));
 
-  const handleSearch = () => {
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
     const filters = {
       major_head: majorHead || "",
       minor_head: minorHead || "",
@@ -61,7 +65,16 @@ export const SearchDocumentCard = ({
   };
 
   return (
-    <Card withBorder padding="lg" shadow="sm">
+    <Card
+      withBorder
+      padding="lg"
+      shadow="sm"
+      style={{
+        width: isLargeScreen ? "70%" : "90%",
+        margin: isLargeScreen ? "" : "0 auto",
+      }}
+    >
+      <form onSubmit={handleSearch}>
       <Stack>
         <Select
           label="Major Head"
@@ -115,8 +128,13 @@ export const SearchDocumentCard = ({
           />
         </Group>
 
-        <Button onClick={handleSearch}>Search</Button>
+        <Group position="right" mt="md">
+          <Button type="submit" >
+            Search Document
+          </Button>
+        </Group>
       </Stack>
+      </form>
     </Card>
   );
 };
